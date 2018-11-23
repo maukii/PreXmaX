@@ -12,6 +12,8 @@ public class VitaminDestroy : MonoBehaviour {
     [SerializeField] float radius;
     [SerializeField] float upforce;
 
+    [SerializeField] int godValue;
+
     void Update ()
     {
         if (timerActive)
