@@ -5,9 +5,9 @@ using UnityEngine;
 public class VitaminExplosion : MonoBehaviour {
 
     public GameObject Player;
-    public float power;
-    public float radius;
-    public float upforce;
+    [SerializeField] float power;
+    [SerializeField] float radius;
+    [SerializeField] float upforce;
 
 	 void Update()
     {

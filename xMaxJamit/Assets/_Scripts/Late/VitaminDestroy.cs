@@ -8,6 +8,10 @@ public class VitaminDestroy : MonoBehaviour {
     public bool timerActive;
     public bool hasThrown;
 
+    [SerializeField] float power;
+    [SerializeField] float radius;
+    [SerializeField] float upforce;
+
     void Update ()
     {
         if (timerActive)
@@ -25,7 +29,21 @@ public class VitaminDestroy : MonoBehaviour {
     {
         if(hasThrown)
         {
+            Explosion();
             Destroy(gameObject);
+        }
+    }
+
+    void Explosion()
+    {
+        Vector3 explosionPos = transform.position;
+        Collider[] colliders = Physics.OverlapSphere(explosionPos, radius);
+        foreach (Collider hit in colliders)
+        {
+            Rigidbody rb = hit.GetComponent<Rigidbody>();
+
+            if (rb != null)
+                rb.AddExplosionForce(power, explosionPos, radius, upforce, ForceMode.Impulse);
         }
     }
 }
