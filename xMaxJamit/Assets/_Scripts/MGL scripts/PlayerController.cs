@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,24 +7,54 @@ public class PlayerController : MonoBehaviour
 {
 
     [SerializeField] int playerNumber = 1;
+
+    [Header("Movement Variables")]
     [SerializeField] float movementSpeed = 5f;
     [SerializeField] float rotationSpeed = 200f;
 
-    public float hor, ver;
+    [SerializeField] GameObject graphics;
+
+    #region PrivateVariables
+
+    Vector3 cameraForward = Vector3.zero;
+    Vector3 cameraRight = Vector3.zero;
+
+    #endregion
+
+    private void Start()
+    {
+        cameraForward = Camera.main.transform.forward;
+        cameraRight = Camera.main.transform.right;
+
+        cameraForward.y = cameraRight.y = 0;
+
+        cameraForward.Normalize();
+        cameraRight.Normalize();
+    }
 
     private void FixedUpdate()
     {
 
-        hor = Input.GetAxis("Horizontal");
-        ver = Input.GetAxis("Vertical");
+        float hor = Input.GetAxis("Joy" + playerNumber.ToString() + "X");
+        float ver = -Input.GetAxis("Joy" + playerNumber.ToString() + "Y");
 
-        Debug.Log("Horizontal" + playerNumber.ToString() + " " + "Vertical" + playerNumber.ToString());
+        Vector3 desiredDirection = cameraForward * ver + cameraRight * hor;
+        DoPlayerMovement(desiredDirection);
 
-        hor *= Time.deltaTime * rotationSpeed;
-        ver *= Time.deltaTime * movementSpeed;
+        if(desiredDirection != Vector3.zero)
+        {
+            RotatePlayerModel(desiredDirection);
+        }
 
-        transform.Translate(0, 0, ver);
-        transform.Rotate(0, hor, 0);
+    }
 
+    private void DoPlayerMovement(Vector3 desiredDirection)
+    {
+        transform.Translate(desiredDirection * movementSpeed * Time.deltaTime);
+    }
+
+    private void RotatePlayerModel(Vector3 desiredDirection)
+    {
+        graphics.transform.rotation = Quaternion.LookRotation(desiredDirection);
     }
 }
