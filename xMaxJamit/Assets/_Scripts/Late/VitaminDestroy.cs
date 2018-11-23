@@ -4,13 +4,26 @@ using UnityEngine;
 
 public class VitaminDestroy : MonoBehaviour {
 
-    public float timeToDie;
+    [SerializeField] float timeToDie;
+    public bool timerActive;
+    public bool hasThrown;
 
     void Update ()
     {
-        timeToDie -= 1 * Time.deltaTime;
+        if (timerActive)
+        {
+            timeToDie -= 1 * Time.deltaTime;
 
-        if (timeToDie <= 0)
+            if (timeToDie <= 0)
+            {
+                Destroy(gameObject);
+            }
+        }
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if(hasThrown)
         {
             Destroy(gameObject);
         }
