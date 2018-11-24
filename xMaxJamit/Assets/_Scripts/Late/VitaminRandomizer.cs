@@ -7,6 +7,8 @@ public class VitaminRandomizer : MonoBehaviour {
     public Vector3 center;
     public Vector3 size;
 
+    public float waitTime = 2f;
+
 	void Start ()
     {
         StartCoroutine(AutoSpawn());
@@ -16,7 +18,7 @@ public class VitaminRandomizer : MonoBehaviour {
     {
         while (true)
         { 
-            yield return new WaitForSeconds(10);
+            yield return new WaitForSeconds(waitTime);
             SpawnVitamins();
         }
     }
