@@ -54,13 +54,8 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        float hor = Input.GetAxis("Joy" + playerNumber.ToString() + "X");
-        float ver = -Input.GetAxis("Joy" + playerNumber.ToString() + "Y");
-
-        desiredDirection = cameraForward * ver + cameraRight * hor;
-
-        anim.SetFloat("Input", desiredDirection.magnitude);
-        anim.SetBool("hasPill", hasPill);
+        Inputs();
+        UpdateAnimatior();
 
         if (stunned)
         {
@@ -87,24 +82,29 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if(desiredDirection.magnitude > 0.2f && !stunned && !slamming)
+        InputsAndMovement();
+    }
+
+    private void InputsAndMovement()
+    {
+        if (desiredDirection.magnitude > 0.2f && !stunned && !slamming)
         {
             DoPlayerMovement(desiredDirection);
             RotatePlayerModel(desiredDirection);
         }
 
-        if((Input.GetKeyDown(KeyCode.Joystick1Button0) && playerNumber == 1) || (Input.GetKeyDown(KeyCode.Joystick2Button0) && playerNumber == 2))
+        if ((Input.GetKeyDown(KeyCode.Joystick1Button0) && playerNumber == 1) || (Input.GetKeyDown(KeyCode.Joystick2Button0) && playerNumber == 2))
         {
-            if(interaction.pills.Count > 0 && !hasPill)
+            if (interaction.pills.Count > 0 && !hasPill)
             {
-                if(!interaction.pills[0].GetComponent<VitaminDestroy>().hasThrown)
+                if (!interaction.pills[0].GetComponent<VitaminDestroy>().hasThrown)
                 {
                     PickUp(interaction.pills[0]);
                 }
             }
-            else if(hasPill)
+            else if (hasPill)
             {
-                if(canSlamDunk)
+                if (canSlamDunk)
                 {
                     SlamDunk(pillInHand);
                 }
@@ -114,6 +114,20 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void UpdateAnimatior()
+    {
+        anim.SetFloat("Input", desiredDirection.magnitude);
+        anim.SetBool("hasPill", hasPill);
+    }
+
+    private void Inputs()
+    {
+        float hor = Input.GetAxis("Joy" + playerNumber.ToString() + "X");
+        float ver = -Input.GetAxis("Joy" + playerNumber.ToString() + "Y");
+
+        desiredDirection = cameraForward * ver + cameraRight * hor;
     }
 
     private void PickUp(GameObject pill)
@@ -197,7 +211,7 @@ public class PlayerController : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(desiredDirection), Time.deltaTime * rotationSpeed);
     }
 
-    public void ResetPlayerRotation() // call this after player gets stunned and gets up
+    public void ResetPlayerRotation()
     {
         transform.rotation = Quaternion.Euler(0, transform.rotation.y, 0);
     }

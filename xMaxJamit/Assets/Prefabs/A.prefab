@@ -123,9 +123,9 @@ MonoBehaviour:
   greenParticle: {fileID: 1632364825182806, guid: ca0e4743a0c18da4f8b16757728931ee,
     type: 2}
   hitMard: {fileID: 1074682189473594, guid: 75cdec73a14c52e429478ef6101983ca, type: 2}
-  power: 5
-  radius: 5
-  upforce: 5
+  power: 7
+  radius: 3
+  upforce: 7
   CurrentColor: 0
 --- !u!136 &136528622940702026
 CapsuleCollider:
