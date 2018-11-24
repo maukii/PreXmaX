@@ -18,19 +18,24 @@ public class PlayerController : MonoBehaviour
 
     #region PrivateVariables
 
+    Rigidbody rb;
+
     Vector3 cameraForward = Vector3.zero;
     Vector3 cameraRight = Vector3.zero;
     Vector3 desiredDirection = Vector3.zero;
 
-    bool hasPill = false;
+    public bool stunned { get; set; }
+    public bool hasPill { get; set; }
     bool canSlamDunk = false;
 
-    GameObject pillInHand;
+    public GameObject pillInHand { get; set; }
 
     #endregion
 
     private void Start()
     {
+        rb = GetComponent<Rigidbody>();
+
         cameraForward = Camera.main.transform.forward;
         cameraRight = Camera.main.transform.right;
 
@@ -47,7 +52,16 @@ public class PlayerController : MonoBehaviour
 
         desiredDirection = cameraForward * ver + cameraRight * hor;
 
-        if(desiredDirection.magnitude > 0.2f)
+        if(stunned)
+        {
+            if(rb.velocity.magnitude < 0.3f)
+            {
+                stunned = false;
+                ResetPlayerRotation();
+            }
+        }
+
+        if(desiredDirection.magnitude > 0.4f && !stunned)
         {
             DoPlayerMovement(desiredDirection);
             RotatePlayerModel(desiredDirection);
