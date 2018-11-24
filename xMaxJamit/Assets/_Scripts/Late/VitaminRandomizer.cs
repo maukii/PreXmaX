@@ -7,6 +7,8 @@ public class VitaminRandomizer : MonoBehaviour {
     public Vector3 center;
     public Vector3 size;
 
+    public GameObject particle;
+
     public float waitTime = 2f;
 
 	void Start ()
@@ -27,6 +29,7 @@ public class VitaminRandomizer : MonoBehaviour {
     {
         Vector3 pos = center + new Vector3(Random.Range(-size.x / 2, size.x / 2), Random.Range(-size.y / 2, size.y / 2), Random.Range(-size.z / 2, size.z / 2));
         Instantiate(Vitamin[Random.Range(0, 3)], pos, Quaternion.identity);
+        Instantiate(particle, pos, Quaternion.identity);
     }
 
     void OnDrawGizmosSelected()

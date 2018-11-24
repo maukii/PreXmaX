@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour
     public GodHand hand { get; set; }
 
     float timer;
+    public bool canInteract = true;
 
     #endregion
 
@@ -52,20 +53,18 @@ public class PlayerController : MonoBehaviour
         cameraRight.Normalize();
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         Inputs();
+        InputsAndMovement();
+    }
+
+    private void FixedUpdate()
+    {
         UpdateAnimatior();
 
         if (stunned)
         {
-            if(touchingFloor)
-            {
-                rb.velocity = Vector3.zero;
-                ResetPlayerRotation();
-                stunned = false;
-            }
-
             anim.SetFloat("Input", 0);
             rb.constraints = RigidbodyConstraints.None;
 
@@ -81,8 +80,6 @@ public class PlayerController : MonoBehaviour
                 timer -= Time.deltaTime;
             }
         }
-
-        InputsAndMovement();
     }
 
     private void InputsAndMovement()
@@ -93,7 +90,7 @@ public class PlayerController : MonoBehaviour
             RotatePlayerModel(desiredDirection);
         }
 
-        if ((Input.GetKeyDown(KeyCode.Joystick1Button0) && playerNumber == 1) || (Input.GetKeyDown(KeyCode.Joystick2Button0) && playerNumber == 2))
+        if ((Input.GetKeyDown(KeyCode.Joystick1Button0) && playerNumber == 1) || (Input.GetKeyDown(KeyCode.Joystick2Button0) && playerNumber == 2) && canInteract)
         {
             if (interaction.pills.Count > 0 && !hasPill)
             {
@@ -113,7 +110,14 @@ public class PlayerController : MonoBehaviour
                     Throw(pillInHand);
                 }
             }
+            canInteract = false;
         }
+
+        if ((Input.GetKeyUp(KeyCode.Joystick1Button0) && playerNumber == 1) || (Input.GetKeyUp(KeyCode.Joystick2Button0) && playerNumber == 2))
+        {
+            canInteract = true;
+        }
+
     }
 
     private void UpdateAnimatior()
@@ -135,7 +139,7 @@ public class PlayerController : MonoBehaviour
         interaction.pills.Remove(interaction.pills[0]);
 
         pillInHand = pill;
-        pill.transform.rotation = Quaternion.Euler(Vector3.zero);
+        pill.transform.rotation = new Quaternion(transform.rotation.x, transform.rotation.y, transform.rotation.z, transform.rotation.w);
         pillInHand.GetComponent<VitaminDestroy>().timerActive = false;
         pillInHand.GetComponent<Rigidbody>().isKinematic = true;
         pillInHand.transform.position = pillPosition.position;
