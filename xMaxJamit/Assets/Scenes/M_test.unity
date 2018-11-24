@@ -225,6 +225,11 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 23319130853948822, guid: b0e59fb62ecab6a4783c3ece6c30a7ec,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 160c011335b09f04ab07be205b8f59fb, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b0e59fb62ecab6a4783c3ece6c30a7ec, type: 2}
   m_IsPrefabAsset: 0
@@ -261,7 +266,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh-27132
+  m_Name: pb_Mesh-3902
   serializedVersion: 9
   m_SubMeshes:
   - serializedVersion: 2
@@ -416,7 +421,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh-27174
+  m_Name: pb_Mesh-1076
   serializedVersion: 9
   m_SubMeshes:
   - serializedVersion: 2
@@ -794,7 +799,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh-27144
+  m_Name: pb_Mesh-1074
   serializedVersion: 9
   m_SubMeshes:
   - serializedVersion: 2
@@ -1003,7 +1008,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh-27108
+  m_Name: pb_Mesh-3896
   serializedVersion: 9
   m_SubMeshes:
   - serializedVersion: 2
@@ -1222,8 +1227,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1050664196}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.58, y: 3.692, z: 0.58}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 5.8513, y: 4.4156, z: 0.46342}
+  m_LocalScale: {x: 1.5551, y: 1.5551, z: 1.5551}
   m_Children:
   - {fileID: 1557761008}
   m_Father: {fileID: 0}
@@ -1234,7 +1239,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh-27162
+  m_Name: pb_Mesh-3898
   serializedVersion: 9
   m_SubMeshes:
   - serializedVersion: 2
@@ -1503,8 +1508,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1261003302}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 4.1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -1.2713, y: 5.05, z: -0.43856}
+  m_LocalScale: {x: 1.5551, y: 1.5551, z: 1.5551}
   m_Children:
   - {fileID: 584225222}
   m_Father: {fileID: 0}
@@ -1694,7 +1699,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh-27120
+  m_Name: pb_Mesh-3900
   serializedVersion: 9
   m_SubMeshes:
   - serializedVersion: 2
