@@ -24,11 +24,12 @@ public class PlayerController : MonoBehaviour
     Vector3 cameraRight = Vector3.zero;
     Vector3 desiredDirection = Vector3.zero;
 
-    bool canSlamDunk = false;
+    public bool canSlamDunk { get; set; }
     public bool hasPill { get; set; }
-    public bool stunned;
+    public bool stunned { get; set; }
 
     public GameObject pillInHand { get; set; }
+    public GodHand hand { get; set; }
 
     float timer;
 
@@ -126,11 +127,11 @@ public class PlayerController : MonoBehaviour
 
     private void SlamDunk(GameObject pill)
     {
-        // check if player gets score
-        // otherObject.GetComponent<GodScript>().GivePill(int pillcolor)
-
+        hand.GetComponent<GodHand>().GivePill(pill, playerNumber);
+        Destroy(pill);
         pill = null;
         hasPill = false;
+        canSlamDunk = false;
     }
 
     public void Stun(float dur)
