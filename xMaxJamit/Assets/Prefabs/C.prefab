@@ -118,6 +118,7 @@ MonoBehaviour:
   power: 10
   radius: 10
   upforce: 10
+  currentColor: 1
 --- !u!136 &136145280774127524
 CapsuleCollider:
   m_ObjectHideFlags: 1

@@ -12,6 +12,9 @@ public class VitaminDestroy : MonoBehaviour {
     [SerializeField] float radius;
     [SerializeField] float upforce;
 
+    public enum PillColor { blue, red, green };
+    public PillColor currentColor;
+
     void Update ()
     {
         if (timerActive)
@@ -27,8 +30,17 @@ public class VitaminDestroy : MonoBehaviour {
 
     private void OnCollisionEnter(Collision other)
     {
-        if(hasThrown)
+        if(hasThrown) // disable controls
         {
+            if(other.gameObject.GetComponent<PlayerController>() != null)
+            {
+                PlayerController play = other.gameObject.GetComponent<PlayerController>();
+                play.stunned = true;
+                play.hasPill = false;
+                Destroy(play.pillInHand);
+                play.pillInHand = null;
+            }
+
             Explosion();
             Destroy(gameObject);
         }

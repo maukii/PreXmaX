@@ -24,7 +24,7 @@ public class PlayerInteraction : MonoBehaviour
                 pills.Remove(pills[i]);
             }
         }
-    }
+    } // deletes pill if destroyed while in range
 
     private void OnTriggerExit(Collider other)
     {
