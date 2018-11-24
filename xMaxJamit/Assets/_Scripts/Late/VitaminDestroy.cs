@@ -9,8 +9,10 @@ public class VitaminDestroy : MonoBehaviour {
     public bool timerActive;
     public bool hasThrown;
 
-    [SerializeField] GameObject redParticle, blueParticle, greenParticle;
-    [SerializeField] GameObject cam;
+    [SerializeField] GameObject redParticle;
+    [SerializeField] GameObject blueParticle;
+    [SerializeField] GameObject greenParticle;
+    GameObject cam;
 
     [SerializeField] float power;
     [SerializeField] float radius;

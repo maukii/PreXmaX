@@ -127,7 +127,7 @@ public class PlayerController : MonoBehaviour
 
     private void SlamDunk(GameObject pill)
     {
-        hand.GetComponent<GodHand>().GivePill(pill, playerNumber);
+        hand.GetComponent<GodHand>().GivePill(pill, playerNumber, otherPlayer);
         Destroy(pill);
         pill = null;
         hasPill = false;

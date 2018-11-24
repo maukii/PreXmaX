@@ -8,7 +8,11 @@ public class GodHand : MonoBehaviour
 {
     public int number = 1;
     public float power, radius, upforce;
+
+    public float cPower, cRadius, cUpforce;
+
     public GameObject happyParticle, madParticle;
+    public Transform particlePos;
 
     Slider slider;
 
@@ -28,14 +32,6 @@ public class GodHand : MonoBehaviour
         }
 
         ChangePill();
-    }
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            ChangePill();
-        }
     }
 
     public void ChangePill()
@@ -64,7 +60,7 @@ public class GodHand : MonoBehaviour
         pills[wantedPill].transform.position = pillPosition.position;
     }
 
-    public void GivePill(GameObject pill, int playerNumber)
+    public void GivePill(GameObject pill, int playerNumber, GameObject otherPlayer)
     {
         if(pill.GetComponent<VitaminDestroy>().CurrentColor == wantedPillColor)
         {
@@ -72,13 +68,13 @@ public class GodHand : MonoBehaviour
         }
         else
         {
-            GetMad(playerNumber);
+            GetMad(otherPlayer, playerNumber);
         }
     }
 
     public void GetHappy(int playerNumber)
     {
-        Instantiate(happyParticle, transform.position, Quaternion.identity);
+        Instantiate(happyParticle, particlePos.position, Quaternion.identity);
 
         if(playerNumber == number)
         {
@@ -93,7 +89,25 @@ public class GodHand : MonoBehaviour
             print("happy me");
         }
 
-        if(slider.value <= 0 || slider.value >= 20)
+        Vector3 explosionPos = transform.position;
+        Collider[] colliders = Physics.OverlapSphere(explosionPos, cRadius);
+        foreach (Collider hit in colliders)
+        {
+
+            Rigidbody rb = hit.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.AddExplosionForce(cPower, explosionPos, cRadius, cUpforce, ForceMode.Impulse);
+            }
+
+            if (hit.gameObject.GetComponent<PlayerController>() != null)
+            {
+                float stunDur = 3f;
+                hit.gameObject.GetComponent<PlayerController>().Stun(stunDur);
+            }
+        }
+
+        if (slider.value <= 0 || slider.value >= 20)
         {
             EndGame();
         }
@@ -101,12 +115,12 @@ public class GodHand : MonoBehaviour
         ChangePill();
     }
 
-    public void GetMad(int playerNumber)
+    public void GetMad(GameObject otherPlayer, int playerNumber)
     {
-        Instantiate(madParticle, transform.position, Quaternion.identity);
-
         if (number == playerNumber)
         {
+            Instantiate(madParticle, particlePos.position, Quaternion.identity);
+
             Vector3 explosionPos = transform.position;
             Collider[] colliders = Physics.OverlapSphere(explosionPos, radius);
             foreach (Collider hit in colliders)
@@ -139,7 +153,31 @@ public class GodHand : MonoBehaviour
         }
         else
         {
-            if(playerNumber == 1)
+            Instantiate(madParticle, otherPlayer.transform.position, Quaternion.identity);
+
+            Vector3 explosionPos = otherPlayer.transform.position;
+            Collider[] colliders = Physics.OverlapSphere(explosionPos, radius);
+            foreach (Collider hit in colliders)
+            {
+
+                Rigidbody rb = hit.GetComponent<Rigidbody>();
+                if (rb != null)
+                {
+                    float mult = 0.3f;
+                    rb.AddExplosionForce(power * mult, new Vector3(explosionPos.x * UnityEngine.Random.Range(-0.5f, 0.5f),
+                                                                   explosionPos.y * UnityEngine.Random.Range(-0.5f, 0.5f),
+                                                                   explosionPos.z * UnityEngine.Random.Range(-0.5f, 0.5f)),
+                                            radius * mult, upforce * mult, ForceMode.Impulse);
+                }
+
+                if (hit.gameObject.GetComponent<PlayerController>() != null)
+                {
+                    float stunDur = 1.5f;
+                    hit.gameObject.GetComponent<PlayerController>().Stun(stunDur);
+                }
+            }
+
+            if (playerNumber == 1)
             {
                 slider.value += 1;
             }
@@ -158,7 +196,7 @@ public class GodHand : MonoBehaviour
 
     private void EndGame()
     {
-        throw new NotImplementedException();
+        print("end game");
     }
 
     private void OnTriggerEnter(Collider other)
