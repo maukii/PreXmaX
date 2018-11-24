@@ -18,19 +18,26 @@ public class PlayerController : MonoBehaviour
 
     #region PrivateVariables
 
+    Rigidbody rb;
+
     Vector3 cameraForward = Vector3.zero;
     Vector3 cameraRight = Vector3.zero;
     Vector3 desiredDirection = Vector3.zero;
 
-    bool hasPill = false;
     bool canSlamDunk = false;
+    public bool hasPill { get; set; }
+    public bool stunned;
 
-    GameObject pillInHand;
+    public GameObject pillInHand { get; set; }
+
+    float timer;
 
     #endregion
 
     private void Start()
     {
+        rb = GetComponent<Rigidbody>();
+
         cameraForward = Camera.main.transform.forward;
         cameraRight = Camera.main.transform.right;
 
@@ -47,7 +54,21 @@ public class PlayerController : MonoBehaviour
 
         desiredDirection = cameraForward * ver + cameraRight * hor;
 
-        if(desiredDirection.magnitude > 0.2f)
+        if(stunned)
+        {
+            if(timer <= 0f)
+            {
+                stunned = false;
+                ResetPlayerRotation();
+                rb.velocity = Vector3.zero;
+            }
+            else
+            {
+                timer -= Time.deltaTime;
+            }
+        }
+
+        if(desiredDirection.magnitude > 0.2f && !stunned)
         {
             DoPlayerMovement(desiredDirection);
             RotatePlayerModel(desiredDirection);
@@ -98,6 +119,7 @@ public class PlayerController : MonoBehaviour
         pill.GetComponent<VitaminDestroy>().hasThrown = true;
         pill.GetComponent<Rigidbody>().isKinematic = false;
         pill.GetComponent<Rigidbody>().AddForce(throwDirection * 50);
+        pill.gameObject.layer += 1;
         pill = null;
         hasPill = false;
     }
@@ -111,6 +133,21 @@ public class PlayerController : MonoBehaviour
         hasPill = false;
     }
 
+    public void Stun(float dur)
+    {
+        timer += dur;
+
+        if(timer > 3f)
+        {
+            timer = 3f;
+        }
+
+        stunned = true;
+        hasPill = false;
+        Destroy(pillInHand);
+        pillInHand = null;
+    }
+
     private void DoPlayerMovement(Vector3 desiredDirection)
     {
         transform.position += transform.forward * movementSpeed * Time.deltaTime;
@@ -120,12 +157,11 @@ public class PlayerController : MonoBehaviour
     {
         float rotationSpeed = 3f;
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(desiredDirection), Time.deltaTime * rotationSpeed);
-        //transform.rotation = Quaternion.Euler(0, transform.rotation.y, 0);
     }
 
     public void ResetPlayerRotation() // call this after player gets stunned and gets up
     {
-        transform.rotation = Quaternion.Euler(Vector3.zero);
+        transform.rotation = Quaternion.Euler(0, transform.rotation.y, 0);
     }
 
     private void OnDrawGizmos()

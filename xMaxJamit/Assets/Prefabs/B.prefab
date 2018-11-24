@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 136681264307173776}
   - component: {fileID: 54110837504883712}
   - component: {fileID: 114034995660137924}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59,7 +59,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: b0bc1b43531172342bf67dd3d1a45364, type: 2}
+  - {fileID: 2100000, guid: c83f6d8ac7989654f8d0f1cad97f0d26, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -112,14 +112,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9426a8543d888454b913f6886e236ecf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stunDur: 3
   timeToDie: 15
   timerActive: 0
   hasThrown: 0
-  particle: {fileID: 1632364825182806, guid: d744d8b278a632c448c0ef95ab405a47, type: 2}
+  redParticle: {fileID: 1632364825182806, guid: a4eac7f7394b6d24597b9f3485a535bf,
+    type: 2}
+  blueParticle: {fileID: 1632364825182806, guid: dd15108dd4a683e4d9755793080b404f,
+    type: 2}
+  greenParticle: {fileID: 1632364825182806, guid: ca0e4743a0c18da4f8b16757728931ee,
+    type: 2}
+  cam: {fileID: 0}
   power: 10
   radius: 10
   upforce: 10
-  godValue: 2
+  CurrentColor: 1
 --- !u!136 &136681264307173776
 CapsuleCollider:
   m_ObjectHideFlags: 1

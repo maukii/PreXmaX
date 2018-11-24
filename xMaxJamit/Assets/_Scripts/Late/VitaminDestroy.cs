@@ -4,18 +4,20 @@ using UnityEngine;
 
 public class VitaminDestroy : MonoBehaviour {
 
+    [SerializeField] float stunDur = 3f;
     [SerializeField] float timeToDie;
     public bool timerActive;
     public bool hasThrown;
 
-    [SerializeField] GameObject particle;
+    [SerializeField] GameObject redParticle, blueParticle, greenParticle;
     [SerializeField] GameObject cam;
 
     [SerializeField] float power;
     [SerializeField] float radius;
     [SerializeField] float upforce;
 
-    [SerializeField] int godValue;
+    public enum PillColor { Red, Green, Blue };
+    public PillColor CurrentColor;
 
     void Start()
     {
@@ -43,7 +45,27 @@ public class VitaminDestroy : MonoBehaviour {
     {
         if(hasThrown)
         {
-            Instantiate(particle, transform.position, Quaternion.identity);
+            switch(CurrentColor)
+            {
+
+                case PillColor.Blue:
+                    Instantiate(blueParticle, transform.position, Quaternion.identity);
+                    break;
+
+
+                case PillColor.Red:
+                    Instantiate(redParticle, transform.position, Quaternion.identity);
+                    break;
+
+                case PillColor.Green:
+                    Instantiate(greenParticle, transform.position, Quaternion.identity);
+                    break;
+
+                default:
+                    print("pill no color");
+                    break;
+            }
+
             Explosion();
             cam.GetComponent<VitaminShake>().shakeDuration = 0.5f;
             cam.GetComponent<VitaminShake>().shakeAmount = 1f;
@@ -57,10 +79,17 @@ public class VitaminDestroy : MonoBehaviour {
         Collider[] colliders = Physics.OverlapSphere(explosionPos, radius);
         foreach (Collider hit in colliders)
         {
+
             Rigidbody rb = hit.GetComponent<Rigidbody>();
             if (rb != null)
             {
                 rb.AddExplosionForce(power, explosionPos, radius, upforce, ForceMode.Impulse);
+            }
+
+            if (hit.gameObject.GetComponent<PlayerController>() != null)
+            {
+                // multiply stuntimer with something
+                hit.gameObject.GetComponent<PlayerController>().Stun(stunDur);
             }
         }
     }
