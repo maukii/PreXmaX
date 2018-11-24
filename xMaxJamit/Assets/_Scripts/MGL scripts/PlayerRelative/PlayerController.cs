@@ -25,9 +25,11 @@ public class PlayerController : MonoBehaviour
     Vector3 cameraRight = Vector3.zero;
     Vector3 desiredDirection = Vector3.zero;
 
-    public bool canSlamDunk { get; set; }
-    public bool hasPill { get; set; }
-    public bool stunned { get; set; }
+    public bool canSlamDunk;
+    public bool hasPill;
+    public bool stunned;
+    bool slamming;
+    public bool touchingFloor;
 
     public GameObject pillInHand { get; set; }
     public GodHand hand { get; set; }
@@ -62,7 +64,15 @@ public class PlayerController : MonoBehaviour
 
         if (stunned)
         {
+            if(touchingFloor)
+            {
+                rb.velocity = Vector3.zero;
+                ResetPlayerRotation();
+                stunned = false;
+            }
+
             anim.SetFloat("Input", 0);
+            rb.constraints = RigidbodyConstraints.None;
 
             if (timer <= 0f)
             {
@@ -77,7 +87,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if(desiredDirection.magnitude > 0.2f && !stunned)
+        if(desiredDirection.magnitude > 0.2f && !stunned && !slamming)
         {
             DoPlayerMovement(desiredDirection);
             RotatePlayerModel(desiredDirection);
@@ -139,21 +149,33 @@ public class PlayerController : MonoBehaviour
     public void SlamDunk(GameObject pill)
     {
         anim.SetTrigger("Dunk");
-
-        hand.GetComponent<GodHand>().GivePill(pill, playerNumber, otherPlayer);
-        Destroy(pill);
-        pill = null;
         hasPill = false;
         canSlamDunk = false;
+        slamming = true;
+        StartCoroutine(DunkLogic(pill));
+    }
+
+    IEnumerator DunkLogic(GameObject pill)
+    {
+        yield return new WaitForSeconds(1);
+
+        if(pillInHand != null)
+        {
+            hand.GetComponent<GodHand>().GivePill(pill, playerNumber, otherPlayer);
+        }
+
+        pillInHand = null;
+        Destroy(pill);
+        slamming = false;
     }
 
     public void Stun(float dur)
-    {
+    {        
         rb.constraints = RigidbodyConstraints.None;
 
         timer += dur;
 
-        if(timer > 3f)
+        if (timer > 3f)
         {
             timer = 3f;
         }
@@ -182,9 +204,10 @@ public class PlayerController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        float distance = 15f;
+        float distance = 2f;
         Vector3 direction = desiredDirection;
         Vector3 point_C = transform.position + (direction.normalized * distance);
         Debug.DrawLine(transform.position, point_C, Color.cyan);
     }
+
 }

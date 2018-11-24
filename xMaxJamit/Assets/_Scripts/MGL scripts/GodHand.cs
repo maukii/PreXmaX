@@ -86,7 +86,6 @@ public class GodHand : MonoBehaviour
             {
                 slider.value -= 1;
             }
-            print("happy me");
         }
 
         Vector3 explosionPos = transform.position;
@@ -102,8 +101,7 @@ public class GodHand : MonoBehaviour
 
             if (hit.gameObject.GetComponent<PlayerController>() != null)
             {
-                float stunDur = 3f;
-                hit.gameObject.GetComponent<PlayerController>().Stun(stunDur);
+                hit.gameObject.GetComponent<PlayerController>().Stun(2f);
             }
         }
 
@@ -134,8 +132,7 @@ public class GodHand : MonoBehaviour
 
                 if (hit.gameObject.GetComponent<PlayerController>() != null)
                 {
-                    float stunDur = 3f;
-                    hit.gameObject.GetComponent<PlayerController>().Stun(stunDur);
+                    hit.gameObject.GetComponent<PlayerController>().Stun(2f);
                 }
             }
 
@@ -148,7 +145,6 @@ public class GodHand : MonoBehaviour
                 slider.value += 1;
             }
 
-            print("mad me");
             ChangePill();
         }
         else
@@ -166,14 +162,13 @@ public class GodHand : MonoBehaviour
                     rb.AddExplosionForce(power, new Vector3(explosionPos.x * UnityEngine.Random.Range(-0.5f, 0.5f),
                                                             explosionPos.y,
                                                             explosionPos.z * UnityEngine.Random.Range(-0.5f, 0.5f)),
-                                            radius, upforce, ForceMode.Impulse);
+                                            radius, upforce * 2, ForceMode.Impulse);
                 }
 
                 if (hit.gameObject.GetComponent<PlayerController>() != null)
                 {
                     print(hit.name);
-                    float stunDur = 1.5f;
-                    hit.gameObject.GetComponent<PlayerController>().Stun(stunDur);
+                    hit.gameObject.GetComponent<PlayerController>().Stun(2f);
                 }
             }
 

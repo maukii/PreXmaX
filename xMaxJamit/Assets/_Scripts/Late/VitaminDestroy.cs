@@ -73,10 +73,11 @@ public class VitaminDestroy : MonoBehaviour {
             Instantiate(hitMard, transform.position, Quaternion.identity);
             cam.GetComponent<VitaminShake>().shakeDuration = 0.5f;
             cam.GetComponent<VitaminShake>().shakeAmount = 1f;
+            Destroy(gameObject);
 
             if(other.gameObject.GetComponent<PlayerController>() != null)
             {
-                Destroy(gameObject);
+                // if only plays destroy pills
             }
         }
     }
@@ -96,8 +97,7 @@ public class VitaminDestroy : MonoBehaviour {
 
             if (hit.gameObject.GetComponent<PlayerController>() != null)
             {
-                // multiply stuntimer with something
-                hit.gameObject.GetComponent<PlayerController>().Stun(stunDur);
+                hit.gameObject.GetComponent<PlayerController>().Stun(2f);
             }
         }
     }
