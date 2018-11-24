@@ -1,16 +1,13 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class VitaminShake : MonoBehaviour
 {
 
     public Transform camTransform;
 
-    [SerializeField] float shakeDuration = 0f;
-    [SerializeField] float shakeAmount = 0.7f;
+    public float shakeDuration;
+    public float shakeAmount;
     [SerializeField] float decreaseFactor = 1.0f;
-
-    public bool shaketrue = false;
 
     Vector3 originalPos;
     float originalShakeDuration;
@@ -26,7 +23,6 @@ public class VitaminShake : MonoBehaviour
     void OnEnable()
     {
         originalPos = camTransform.localPosition;
-        originalShakeDuration = shakeDuration; 
     }
 
     void Update()
@@ -38,8 +34,8 @@ public class VitaminShake : MonoBehaviour
         }
         else
         {
-        shakeDuration = originalShakeDuration;
-        camTransform.localPosition = originalPos;
+            camTransform.localPosition = originalPos;
+            shakeDuration = 0;
         }
     }
     

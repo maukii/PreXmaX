@@ -115,6 +115,7 @@ MonoBehaviour:
   timeToDie: 15
   timerActive: 0
   hasThrown: 0
+  particle: {fileID: 1632364825182806, guid: d744d8b278a632c448c0ef95ab405a47, type: 2}
   power: 10
   radius: 10
   upforce: 10

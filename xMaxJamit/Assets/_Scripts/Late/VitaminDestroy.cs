@@ -8,11 +8,23 @@ public class VitaminDestroy : MonoBehaviour {
     public bool timerActive;
     public bool hasThrown;
 
+    [SerializeField] GameObject particle;
+    [SerializeField] GameObject cam;
+
     [SerializeField] float power;
     [SerializeField] float radius;
     [SerializeField] float upforce;
 
     [SerializeField] int godValue;
+
+    void Start()
+    {
+        timerActive = true;
+        if(cam == null)
+        {
+            cam = GameObject.FindWithTag("MainCamera");
+        }
+    }
 
     void Update ()
     {
@@ -31,7 +43,10 @@ public class VitaminDestroy : MonoBehaviour {
     {
         if(hasThrown)
         {
+            Instantiate(particle, transform.position, Quaternion.identity);
             Explosion();
+            cam.GetComponent<VitaminShake>().shakeDuration = 0.5f;
+            cam.GetComponent<VitaminShake>().shakeAmount = 1f;
             Destroy(gameObject);
         }
     }
@@ -43,9 +58,10 @@ public class VitaminDestroy : MonoBehaviour {
         foreach (Collider hit in colliders)
         {
             Rigidbody rb = hit.GetComponent<Rigidbody>();
-
             if (rb != null)
+            {
                 rb.AddExplosionForce(power, explosionPos, radius, upforce, ForceMode.Impulse);
+            }
         }
     }
 }
