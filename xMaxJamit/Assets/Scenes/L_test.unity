@@ -555,8 +555,7 @@ Prefab:
     - target: {fileID: 1492669112763924, guid: d97febd429453154eb04b41b4f795573, type: 2}
       propertyPath: m_Icon
       value: 
-      objectReference: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000,
-        type: 0}
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114250845049174242, guid: d97febd429453154eb04b41b4f795573, type: 2}
     - {fileID: 54268073375648374, guid: d97febd429453154eb04b41b4f795573, type: 2}
@@ -723,10 +722,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerNumber: 1
   movementSpeed: 10
-  hasPill: 0
-  canSlamDunk: 0
+  pillPosition: {fileID: 0}
   graphics: {fileID: 584225218}
   interaction: {fileID: 827616830}
+  otherPlayer: {fileID: 0}
 --- !u!4 &1261003304
 Transform:
   m_ObjectHideFlags: 0
@@ -797,10 +796,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerNumber: 2
   movementSpeed: 5
-  hasPill: 0
-  canSlamDunk: 0
+  pillPosition: {fileID: 0}
   graphics: {fileID: 9716361}
   interaction: {fileID: 0}
+  otherPlayer: {fileID: 0}
 --- !u!4 &1269123138
 Transform:
   m_ObjectHideFlags: 0
@@ -1238,6 +1237,7 @@ GameObject:
   - component: {fileID: 1817376583}
   - component: {fileID: 1817376582}
   - component: {fileID: 1817376581}
+  - component: {fileID: 1817376584}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1305,3 +1305,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 47.477, y: 0, z: 0}
+--- !u!114 &1817376584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1817376580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d81703c9137699143b32898a97d339d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camTransform: {fileID: 0}
+  shakeDuration: 10
+  shakeAmount: 200
+  decreaseFactor: 1
+  shaketrue: 0
