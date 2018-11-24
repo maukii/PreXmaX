@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class VitaminGod : MonoBehaviour {
 
-    int vitaminNumber;
+    public int vitaminNumber;
     [SerializeField] GameObject[] objective;
 
 	void Start ()
@@ -20,13 +20,15 @@ public class VitaminGod : MonoBehaviour {
         objective[2].SetActive(false);
         Vitamins();
     }
-    private void Update()
+
+/*      private void Update()
     {
         if (Input.GetKeyDown("space"))
         {
             GetVitamin();
         }
     }
+*/
 
     void Vitamins()
     {
