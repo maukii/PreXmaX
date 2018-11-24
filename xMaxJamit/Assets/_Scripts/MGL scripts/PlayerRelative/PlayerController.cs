@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     #region PrivateVariables
 
     Rigidbody rb;
+    Animator anim;
 
     Vector3 cameraForward = Vector3.zero;
     Vector3 cameraRight = Vector3.zero;
@@ -38,6 +39,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        anim = GetComponentInChildren<Animator>();
 
         cameraForward = Camera.main.transform.forward;
         cameraRight = Camera.main.transform.right;
@@ -55,13 +57,19 @@ public class PlayerController : MonoBehaviour
 
         desiredDirection = cameraForward * ver + cameraRight * hor;
 
-        if(stunned)
+        anim.SetFloat("Input", desiredDirection.magnitude);
+        anim.SetBool("hasPill", hasPill);
+
+        if (stunned)
         {
-            if(timer <= 0f)
+            anim.SetFloat("Input", 0);
+
+            if (timer <= 0f)
             {
                 stunned = false;
-                ResetPlayerRotation();
                 rb.velocity = Vector3.zero;
+                rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+                ResetPlayerRotation();
             }
             else
             {
@@ -103,6 +111,7 @@ public class PlayerController : MonoBehaviour
         interaction.pills.Remove(interaction.pills[0]);
 
         pillInHand = pill;
+        pill.transform.rotation = Quaternion.Euler(Vector3.zero);
         pillInHand.GetComponent<VitaminDestroy>().timerActive = false;
         pillInHand.GetComponent<Rigidbody>().isKinematic = true;
         pillInHand.transform.position = pillPosition.position;
@@ -112,6 +121,8 @@ public class PlayerController : MonoBehaviour
 
     private void Throw(GameObject pill)
     {
+        anim.SetTrigger("Throw");
+
         pill.transform.parent = null;
 
         float throwHeight = 5f;
@@ -125,8 +136,10 @@ public class PlayerController : MonoBehaviour
         hasPill = false;
     }
 
-    private void SlamDunk(GameObject pill)
+    public void SlamDunk(GameObject pill)
     {
+        anim.SetTrigger("Dunk");
+
         hand.GetComponent<GodHand>().GivePill(pill, playerNumber, otherPlayer);
         Destroy(pill);
         pill = null;
@@ -136,6 +149,8 @@ public class PlayerController : MonoBehaviour
 
     public void Stun(float dur)
     {
+        rb.constraints = RigidbodyConstraints.None;
+
         timer += dur;
 
         if(timer > 3f)

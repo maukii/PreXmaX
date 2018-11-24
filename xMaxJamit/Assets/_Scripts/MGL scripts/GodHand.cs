@@ -11,7 +11,7 @@ public class GodHand : MonoBehaviour
 
     public float cPower, cRadius, cUpforce;
 
-    public GameObject happyParticle, madParticle;
+    public GameObject happyParticle, madParticle, endParticle;
     public Transform particlePos;
 
     Slider slider;
@@ -163,15 +163,15 @@ public class GodHand : MonoBehaviour
                 Rigidbody rb = hit.GetComponent<Rigidbody>();
                 if (rb != null)
                 {
-                    float mult = 0.3f;
-                    rb.AddExplosionForce(power * mult, new Vector3(explosionPos.x * UnityEngine.Random.Range(-0.5f, 0.5f),
-                                                                   explosionPos.y * UnityEngine.Random.Range(-0.5f, 0.5f),
-                                                                   explosionPos.z * UnityEngine.Random.Range(-0.5f, 0.5f)),
-                                            radius * mult, upforce * mult, ForceMode.Impulse);
+                    rb.AddExplosionForce(power, new Vector3(explosionPos.x * UnityEngine.Random.Range(-0.5f, 0.5f),
+                                                            explosionPos.y,
+                                                            explosionPos.z * UnityEngine.Random.Range(-0.5f, 0.5f)),
+                                            radius, upforce, ForceMode.Impulse);
                 }
 
                 if (hit.gameObject.GetComponent<PlayerController>() != null)
                 {
+                    print(hit.name);
                     float stunDur = 1.5f;
                     hit.gameObject.GetComponent<PlayerController>().Stun(stunDur);
                 }
@@ -196,7 +196,21 @@ public class GodHand : MonoBehaviour
 
     private void EndGame()
     {
-        print("end game");
+        GameObject particle = Instantiate(endParticle, new Vector3(0, 3, 0), Quaternion.identity);
+        particle.transform.localScale = Vector3.one * 3;
+
+        Vector3 explosionPos = Vector3.zero;
+        Collider[] colliders = Physics.OverlapSphere(explosionPos, radius * 100);
+        foreach (Collider hit in colliders)
+        {
+
+            Rigidbody rb = hit.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.AddExplosionForce(power * 10, new Vector3(explosionPos.x, explosionPos.y, explosionPos.z), radius * 10, upforce * 10, ForceMode.Impulse);
+            }
+            print("end game");
+        }
     }
 
     private void OnTriggerEnter(Collider other)

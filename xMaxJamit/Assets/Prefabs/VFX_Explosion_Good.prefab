@@ -155,6 +155,7 @@ GameObject:
   - component: {fileID: 4669208049287348}
   - component: {fileID: 198480983165310246}
   - component: {fileID: 199027563098571474}
+  - component: {fileID: 114665818263869338}
   m_Layer: 0
   m_Name: Base
   m_TagString: Untagged
@@ -354,6 +355,19 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &114665818263869338
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1847038968897570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffee4fbaddbf32a4f96df9473e67ef20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minDuration: 3
+  maxDuration: 5
 --- !u!198 &198245480736845010
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -18724,7 +18738,7 @@ ParticleSystem:
   lengthInSec: 1
   simulationSpeed: 1
   stopAction: 0
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0

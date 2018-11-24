@@ -36,6 +36,7 @@ GameObject:
   - component: {fileID: 4924211393228096}
   - component: {fileID: 198633940598590510}
   - component: {fileID: 199865152038593336}
+  - component: {fileID: 114094448854677676}
   m_Layer: 0
   m_Name: pt
   m_TagString: Untagged
@@ -70,6 +71,19 @@ Transform:
   m_Father: {fileID: 4787147805882210}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!114 &114094448854677676
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1564988765606978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffee4fbaddbf32a4f96df9473e67ef20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minDuration: 3
+  maxDuration: 5
 --- !u!198 &198633940598590510
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -80,7 +94,7 @@ ParticleSystem:
   lengthInSec: 1
   simulationSpeed: 1
   stopAction: 0
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0

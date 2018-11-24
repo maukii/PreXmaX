@@ -12,6 +12,7 @@ public class VitaminDestroy : MonoBehaviour {
     [SerializeField] GameObject redParticle;
     [SerializeField] GameObject blueParticle;
     [SerializeField] GameObject greenParticle;
+    [SerializeField] GameObject hitMard;
     GameObject cam;
 
     [SerializeField] float power;
@@ -69,9 +70,14 @@ public class VitaminDestroy : MonoBehaviour {
             }
 
             Explosion();
+            Instantiate(hitMard, transform.position, Quaternion.identity);
             cam.GetComponent<VitaminShake>().shakeDuration = 0.5f;
             cam.GetComponent<VitaminShake>().shakeAmount = 1f;
-            Destroy(gameObject);
+
+            if(other.gameObject.GetComponent<PlayerController>() != null)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 
