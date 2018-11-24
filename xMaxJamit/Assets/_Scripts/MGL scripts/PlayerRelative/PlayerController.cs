@@ -120,6 +120,7 @@ public class PlayerController : MonoBehaviour
     {
         float rotationSpeed = 3f;
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(desiredDirection), Time.deltaTime * rotationSpeed);
+        //transform.rotation = Quaternion.Euler(0, transform.rotation.y, 0);
     }
 
     public void ResetPlayerRotation() // call this after player gets stunned and gets up
