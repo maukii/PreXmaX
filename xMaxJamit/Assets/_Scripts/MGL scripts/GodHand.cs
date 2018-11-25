@@ -27,6 +27,7 @@ public class GodHand : MonoBehaviour
     GameObject cam;
     public GameObject music;
     public AudioClip headache;
+    public AudioClip standard;
 
     private void Start()
     {
@@ -115,13 +116,17 @@ public class GodHand : MonoBehaviour
                 hit.gameObject.GetComponent<PlayerController>().Stun(2f);
             }
         }
+        if (slider.value == 4 || slider.value == 8)
+        {
+            StartCoroutine(WaitForStandard());
+        }
 
-        if (slider.value == 5 || slider.value == 15)
+        if (slider.value == 3 || slider.value == 9)
         {
             StartCoroutine(WaitForSong());
         }
 
-        if (slider.value <= 0 || slider.value >= 20)
+        if (slider.value <= 0 || slider.value >= 12)
         {
             EndGame();
         }
@@ -197,9 +202,19 @@ public class GodHand : MonoBehaviour
                 slider.value -= 1;
             }
 
-            if (slider.value <= 0 || slider.value >= 20)
+            if (slider.value <= 0 || slider.value >= 12)
             {
                 EndGame();
+            }
+
+            if (slider.value == 3 || slider.value == 9)
+            {
+                StartCoroutine(WaitForSong());
+            }
+
+            if (slider.value == 4 || slider.value == 8)
+            {
+                StartCoroutine(WaitForStandard());
             }
 
         }
@@ -222,7 +237,7 @@ public class GodHand : MonoBehaviour
                 cam.GetComponent<VitaminShake>().shakeAmount = 3f;
                 rb.AddExplosionForce(power * 10, new Vector3(explosionPos.x, explosionPos.y, explosionPos.z), radius * 10, upforce * 10, ForceMode.Impulse);
             }
-            if (slider.value == 20)
+            if (slider.value == 12)
             {
                 winners[1].SetActive(true);
                 StartCoroutine(WaitForMenu());
@@ -242,6 +257,13 @@ public class GodHand : MonoBehaviour
     }
 
     private IEnumerator WaitForSong()
+    {
+        yield return new WaitForSeconds(music.GetComponent<AudioSource>().clip.length);
+        music.GetComponent<AudioSource>().clip = headache;
+        music.GetComponent<AudioSource>().Play();
+    }
+
+    private IEnumerator WaitForStandard()
     {
         yield return new WaitForSeconds(music.GetComponent<AudioSource>().clip.length);
         music.GetComponent<AudioSource>().clip = headache;
