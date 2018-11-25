@@ -34,7 +34,7 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void PlaySoundEffect(string audioClipName, float audioVolume)
+    public void PlaySoundEffect(string name, float audioVolume)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
 
