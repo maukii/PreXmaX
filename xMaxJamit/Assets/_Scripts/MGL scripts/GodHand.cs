@@ -118,7 +118,7 @@ public class GodHand : MonoBehaviour
 
         if (slider.value == 5 || slider.value == 15)
         {
-            music.GetComponent<AudioSource>().clip = headache;
+            StartCoroutine(WaitForSong());
         }
 
         if (slider.value <= 0 || slider.value >= 20)
@@ -239,6 +239,13 @@ public class GodHand : MonoBehaviour
     {
         yield return new WaitForSeconds(5.0f);
         SceneManager.LoadScene(0);
+    }
+
+    private IEnumerator WaitForSong()
+    {
+        yield return new WaitForSeconds(music.GetComponent<AudioSource>().clip.length);
+        music.GetComponent<AudioSource>().clip = headache;
+        music.GetComponent<AudioSource>().Play();
     }
 
     private void OnTriggerEnter(Collider other)
