@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Audio;
 using UnityEngine;
+using System.Linq;
 
 public class AudioManager : MonoBehaviour
 {
@@ -45,5 +46,4 @@ public class AudioManager : MonoBehaviour
         s.source.volume = audioVolume;
         s.source.Play();
     }
-
 }

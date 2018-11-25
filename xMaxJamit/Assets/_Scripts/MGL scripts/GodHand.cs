@@ -87,6 +87,7 @@ public class GodHand : MonoBehaviour
     public void GetHappy(int playerNumber)
     {
         Instantiate(happyParticle, particlePos.position, Quaternion.identity);
+        AudioManager.instance.PlaySoundEffect("happy",1f);
 
         if(playerNumber == number)
         {
@@ -139,6 +140,7 @@ public class GodHand : MonoBehaviour
         if (number == playerNumber)
         {
             Instantiate(madParticle, particlePos.position, Quaternion.identity);
+            AudioManager.instance.PlaySoundEffect("angry", 1f);
 
             Vector3 explosionPos = transform.position;
             Collider[] colliders = Physics.OverlapSphere(explosionPos, radius);

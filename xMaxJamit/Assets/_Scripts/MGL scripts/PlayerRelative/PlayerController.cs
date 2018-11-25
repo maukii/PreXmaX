@@ -137,7 +137,7 @@ public class PlayerController : MonoBehaviour
     private void PickUp(GameObject pill)
     {
         interaction.pills.Remove(interaction.pills[0]);
-
+        AudioManager.instance.PlaySoundEffect("vitamin", 1f);
         pillInHand = pill;
         pill.transform.rotation = new Quaternion(transform.rotation.x, transform.rotation.y, transform.rotation.z, transform.rotation.w);
         pillInHand.GetComponent<VitaminDestroy>().timerActive = false;
@@ -150,7 +150,7 @@ public class PlayerController : MonoBehaviour
     private void Throw(GameObject pill)
     {
         anim.SetTrigger("Throw");
-
+        AudioManager.instance.PlaySoundEffect("throw", 1f);
         pill.transform.parent = null;
 
         float throwHeight = 5f;

@@ -70,6 +70,7 @@ public class VitaminDestroy : MonoBehaviour {
             }
 
             Explosion();
+            AudioManager.instance.PlaySoundEffect("oof", 1f);
             Instantiate(hitMard, transform.position, Quaternion.identity);
             cam.GetComponent<VitaminShake>().shakeDuration = 0.5f;
             cam.GetComponent<VitaminShake>().shakeAmount = 1f;
