@@ -30,22 +30,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 556797029e73b2347956b6579e77e05b, type: 3}
   m_Name: DepthOfField
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   enabled:
     overrideState: 1
     value: 1
   focusDistance:
     overrideState: 1
-    value: 10
+    value: 12.33
   aperture:
     overrideState: 1
-    value: 5.6
+    value: 8.8
   focalLength:
     overrideState: 1
-    value: 50
+    value: 217
   kernelSize:
     overrideState: 1
-    value: 1
+    value: 0
 --- !u!114 &114123947063764516
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -63,7 +63,7 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 0.56
+    value: 16.66
   threshold:
     overrideState: 1
     value: 1
@@ -195,13 +195,13 @@ MonoBehaviour:
     value: 100
   lift:
     overrideState: 1
-    value: {x: 1, y: 0.6389582, z: 0.6485326, w: 0}
+    value: {x: 1, y: 0.8717949, z: 0.8765365, w: 0}
   gamma:
     overrideState: 1
-    value: {x: 1, y: 0.61941016, z: 0.7014784, w: 0}
+    value: {x: 1, y: 0.8460468, z: 0.8307435, w: 0}
   gain:
     overrideState: 1
-    value: {x: 1, y: 0.5536312, z: 0.6452815, w: 0}
+    value: {x: 1, y: 0.7122494, z: 0.7550411, w: 0}
   masterCurve:
     overrideState: 1
     value:
