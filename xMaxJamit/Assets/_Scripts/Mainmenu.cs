@@ -1,15 +1,16 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Mainmenu : MonoBehaviour {
+public class Mainmenu : MonoBehaviour
+{
 
-	public void PlayGame ()
-
+    public void PlayGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene() .buildIndex +1);	
-	}
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
 
     public void QuitGame()
     {
@@ -17,7 +18,9 @@ public class Mainmenu : MonoBehaviour {
         Application.Quit();
     }
 
-	void Update () {
-		
-	}
+    public void Options()
+    {
+        print("options");
+    }
+
 }
