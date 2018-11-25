@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GodHand : MonoBehaviour
 {
@@ -22,8 +23,18 @@ public class GodHand : MonoBehaviour
     public VitaminDestroy.PillColor wantedPillColor;
     public Transform pillPosition;
 
+    public GameObject[] winners = new GameObject[2];
+    GameObject cam;
+    public GameObject music;
+    public AudioClip headache;
+
     private void Start()
     {
+        if (cam == null)
+        {
+            cam = GameObject.FindWithTag("MainCamera");
+        }
+
         slider = FindObjectOfType<Slider>();
 
         for (int i = 0; i < pills.Length; i++)
@@ -103,6 +114,11 @@ public class GodHand : MonoBehaviour
             {
                 hit.gameObject.GetComponent<PlayerController>().Stun(2f);
             }
+        }
+
+        if (slider.value == 5 || slider.value == 15)
+        {
+            music.GetComponent<AudioSource>().clip = headache;
         }
 
         if (slider.value <= 0 || slider.value >= 20)
@@ -202,10 +218,27 @@ public class GodHand : MonoBehaviour
             Rigidbody rb = hit.GetComponent<Rigidbody>();
             if (rb != null)
             {
+                cam.GetComponent<VitaminShake>().shakeDuration = 1f;
+                cam.GetComponent<VitaminShake>().shakeAmount = 3f;
                 rb.AddExplosionForce(power * 10, new Vector3(explosionPos.x, explosionPos.y, explosionPos.z), radius * 10, upforce * 10, ForceMode.Impulse);
             }
-            print("end game");
+            if (slider.value == 20)
+            {
+                winners[1].SetActive(true);
+                StartCoroutine(WaitForMenu());
+            }
+            if (slider.value == 0)
+            {
+                winners[0].SetActive(true);
+                StartCoroutine(WaitForMenu());
+            }
         }
+    }
+
+    private IEnumerator WaitForMenu()
+    {
+        yield return new WaitForSeconds(5.0f);
+        SceneManager.LoadScene(0);
     }
 
     private void OnTriggerEnter(Collider other)
