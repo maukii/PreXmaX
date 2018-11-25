@@ -29,6 +29,10 @@ public class GodHand : MonoBehaviour
     public AudioClip headache;
     public AudioClip standard;
 
+    public AudioSource soossi;
+    public AudioClip gooood;
+    public AudioClip baaaad;
+
     private void Start()
     {
         if (cam == null)
@@ -87,7 +91,7 @@ public class GodHand : MonoBehaviour
     public void GetHappy(int playerNumber)
     {
         Instantiate(happyParticle, particlePos.position, Quaternion.identity);
-        AudioManager.instance.PlaySoundEffect("happy",1f);
+        soossi.PlayOneShot(gooood);
 
         if(playerNumber == number)
         {
@@ -137,10 +141,11 @@ public class GodHand : MonoBehaviour
 
     public void GetMad(GameObject otherPlayer, int playerNumber)
     {
+        soossi.PlayOneShot(baaaad);
+
         if (number == playerNumber)
         {
             Instantiate(madParticle, particlePos.position, Quaternion.identity);
-            AudioManager.instance.PlaySoundEffect("angry", 1f);
 
             Vector3 explosionPos = transform.position;
             Collider[] colliders = Physics.OverlapSphere(explosionPos, radius);

@@ -16,6 +16,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] PlayerInteraction interaction;
     [SerializeField] GameObject otherPlayer;
 
+    public AudioClip throwSound;
+    public AudioClip pickuSound;
+    public AudioClip ooof;
+
+    AudioSource soossi;
+
     #region PrivateVariables
 
     Rigidbody rb;
@@ -43,6 +49,8 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
+
+        soossi = GetComponentInChildren<AudioSource>();
 
         cameraForward = Camera.main.transform.forward;
         cameraRight = Camera.main.transform.right;
@@ -137,7 +145,7 @@ public class PlayerController : MonoBehaviour
     private void PickUp(GameObject pill)
     {
         interaction.pills.Remove(interaction.pills[0]);
-        AudioManager.instance.PlaySoundEffect("vitamin", 1f);
+        soossi.PlayOneShot(pickuSound);
         pillInHand = pill;
         pill.transform.rotation = new Quaternion(transform.rotation.x, transform.rotation.y, transform.rotation.z, transform.rotation.w);
         pillInHand.GetComponent<VitaminDestroy>().timerActive = false;
@@ -150,7 +158,7 @@ public class PlayerController : MonoBehaviour
     private void Throw(GameObject pill)
     {
         anim.SetTrigger("Throw");
-        AudioManager.instance.PlaySoundEffect("throw", 1f);
+        soossi.PlayOneShot(throwSound);
         pill.transform.parent = null;
 
         float throwHeight = 5f;
@@ -190,6 +198,7 @@ public class PlayerController : MonoBehaviour
     public void Stun(float dur)
     {        
         rb.constraints = RigidbodyConstraints.None;
+        soossi.PlayOneShot(ooof);
 
         timer += dur;
 
